@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: rgba(116, 235, 213, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+} 
+#container {
+  width: 363px;
+  background-color: #fff;
+}
+#container h2 {
+  background: linear-gradient(to left, #ff105f, #ffad06);
+  padding: 20px 0;
+  color: #222;
+  font-size: 24px;
+  text-align: center;
+  color: #fff;
+}
+#container form {
+  width: 100%;
+  padding: 20px 40px;
+  height: 350px;
+}
+form h3 {
+  text-align: center;
+  color: #e74c3c;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  text-transform: uppercase;
+}
+form input {
+  width: 100%;
+  padding: 10px 5px;
+  margin: 5px;
+  border: none;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
+}
+.box {
+  margin-bottom: 20px;
+  position: relative;
+}
+.box label {
+  display: inline-block;
+  margin: 5px;
+  margin-top: 15px;
+}
+.box input {
+  width: 100%;
+  border: 2px solid #f0f0f0;
+  border-radius: 5px;
+  display: block;
+  font-size: 14px;
+  padding: 8px;
+}
+.box input:focus {
+  outline: 0;
+  border-color: #777;
+}
+.box.success input {
+  border-color: #2ecc71;
+}
+.box.error input {
+  border-color: #e74c3c;
+}
+.box i {
+  position: absolute;
+  right: 12%;
+  top: 50px;
+  visibility: hidden;
+}
+.box.success i.fa-check-circle {
+  color: #2ecc71;
+  visibility: visible;
+}
+.box.error i.fa-exclamation-circle {
+  color: #e74c3c;
+  visibility: visible;
+}
+.box small {
+  color: #e74c3c;
+  position: absolute;
+  left: 1%;
+  visibility: hidden;
+}
+.box.error small {
+  visibility: visible;
+}
+form button {
+  background: linear-gradient(to left, #ff105f, #ffad06);
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 0;
+  margin-top: 50px;
+  width: 40%;
+  margin: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+form button:hover {
+  background: linear-gradient(to right, #ff105f, #ffad06);
+}
+.nextBtn {
+  float: right;
+}
+
+form .submitBtn {
+  display: none;
+}
+
+@media(max-width: 998px) {
+  #mainContainer {
+    width: 363px;
+    max-width: 100%;
+  }
+} 
