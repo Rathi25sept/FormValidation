@@ -92,11 +92,11 @@ form input {
   color: #e74c3c;
   position: absolute;
   left: 1%;
-  visibility: hidden;
+  display: none;
 }
-.box.error small {
+/* .box.error small {
   visibility: visible;
-}
+} */
 form button {
   background: linear-gradient(to left, #ff105f, #ffad06);
   border-radius: 6px;
@@ -127,3 +127,5 @@ form .submitBtn {
     max-width: 100%;
   }
 } 
+
+

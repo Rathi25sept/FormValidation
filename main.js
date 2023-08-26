@@ -9,22 +9,38 @@ function renderData(data) {
   container.innerHTML += `<h2>REGISTRATION FORM</h2>`;
 
   let form = document.createElement("form");
-  form.innerHTML += `<h3>${data[index].sectionName}</h3>`
+  let box = document.createElement("div");
+  box.id = "formBox";
+  box.innerHTML += `<h3>${data[index].sectionName}</h3>`
+  
   data[index].formInputs.forEach(function(formInput){
-    form.innerHTML += `<div class = "box"><label>${formInput.label}</label>
+    box.innerHTML += `<div class = "box"><label>${formInput.label}</label>
     <input type = '${formInput.type}' placeholder = '${formInput.placeholder}' id = '${formInput.id}'>
     <i class="fa fa-check-circle"></i>
     <i class="fa fa-exclamation-circle"></i>
     <small>Error Msg</small></div>`
+    form.append(box);
+    container.append(form);
     
   })
+}
+renderData(formFieldsData);
+
+function createButton(data) {
+  let form = document.querySelector("form")
   let nextBtn = document.createElement("button")
   nextBtn.innerText = "Next";
   nextBtn.className = "nextBtn";
   if(index == data.length - 1 ) {
     nextBtn.style.display = "none";
   } 
-  nextBtn.addEventListener("click", renderNextform);
+
+  let nextBtn2 = document.createElement("button")
+  nextBtn2.innerText = "Next";
+  nextBtn2.className = "nextBtn2";
+  if(index == data.length - 1 ) {
+    nextBtn.style.display = "none";
+  } 
 
   let backBtn = document.createElement("button")
   backBtn.innerText = "back";
@@ -40,26 +56,19 @@ function renderData(data) {
   if(index == data.length - 1) {
     submitBtn.style.display = "inline-block";
   }
-  // submitBtn.addEventListener("click", renderBackform);
   form.append(nextBtn, backBtn,  submitBtn);
-  container.append(form);
+  
 }   
-renderData(formFieldsData);
+createButton(formFieldsData);
 
-// add event....
-
-function renderNextform(event){
-  event.preventDefault();
-  validate();
-  index ++;
-  renderData(formFieldsData);
+function submitBtnfunction(){
+  let submitButton = document.querySelector(".submitBtn")
+  submitButton.addEventListener("submit", function(event){
+    event.preventDefault();
+    renderNextform3();
+  });
 }
-
-function renderBackform(event){
-  event.preventDefault();
-  index --;
-  renderData(formFieldsData);
-}
+submitBtnfunction();
 
 function sendData(successRate, count) {
   console.log('-------<<',successRate,count);
@@ -86,104 +95,145 @@ function successMsg() {
    }
  }
 }
+successMsg();
 
+function setErrorMsg(errormsgs) {
+  let inputBox = document.querySelectorAll('input');
+  inputBox.forEach(function(item){
 
-// more email validate....
-
-function isEmail(emailVal) {
- let atSymbol = emailVal.indexOf("@");
- if(atSymbol < 1){
-   return false;
- }
- let dot = emailVal.lastIndexOf(".");
- if(dot <= atSymbol + 3) {
-   return false;
- }
- if(dot === emailVal.length - 1){
-   return false;
- }else{
-   return true;
- }
-}
-
-// define the validate function....
-
-function validate(){
-
-// validate username....
- const fnameVal = document.getElementById("fname").value.trim();
- console.log("==========",fnameVal);
- if(fnameVal === ""){
-   setErrorMsg(fname, "username can not be blank");
- }else if(fnameVal.length <= 2){
-   setErrorMsg(fname, "username can not be blank");
- }else{
-   setSuccessMsg(fname);
- }
-
-  // validate username....
-  const lnameVal = document.getElementById("lname").value.trim();
-  if(lnameVal === ""){
-    setErrorMsg(lname, "username can not be blank");
-  }else if(lnameVal.length <= 2){
-    setErrorMsg(lname, "username can not be blank");
-  }else{
-    setSuccessMsg(lname);
-  }
-  successMsg();
-}
-
-//  // validate email....
-//  const emailVal = document.getElementById("email").value.trim();
-//  if(emailVal === ""){
-//    setErrorMsg(email, "email can not be blank");
-//  }else if(!isEmail(emailVal)){
-//    setErrorMsg(email, "Not a valid Email");
-//  }else{
-//    setSuccessMsg(email);
-//  }
-
-//  // validate phone....
-//  const phoneVal = document.getElementById("phone").value.trim();
-//  if(phoneVal === ""){
-//    setErrorMsg(phone, "phone can not be blank");
-//  }else if(phoneVal.length != 10){
-//    setErrorMsg(phone, "Not a valid phone num");
-//  }else{
-//    setSuccessMsg(phone);
-//  }
-
-//  // validate passward....
-//  const passwordVal = document.getElementById("password").value.trim();
-//  if(passwordVal === ""){
-//    setErrorMsg(password, "password can not be blank");
-//  }else if(passwordVal.length <= 5){
-//    setErrorMsg(password, "Minimum 6 char");
-//  }else{
-//    setSuccessMsg(password);
-//  }
-
-//  // validate cpassward....
-//  const cpasswordVal = document.getElementById("cpassword").value.trim();
-//  if(cpasswordVal === ""){
-//    setErrorMsg(cpassword, "confirm password can not be blank");
-//  }else if(passwordVal != cpasswordVal){
-//    setErrorMsg(cpassword, "password are not matching");
-//  }else{
-//    setSuccessMsg(cpassword);
-//  }
-
-
-
-function setErrorMsg(input, errormsgs) {
- const formControl = input.parentElement;
- console.log('>>>>',formControl);
- const small = formControl.querySelector("small");
- formControl.className = "box error"
- small.innerText = errormsgs
+    const formControl = item.parentElement;
+    const small = formControl.querySelector("small");
+    formControl.classList.add("box", "error");
+    small.innerText = errormsgs ;
+    small.style.display = "block";
+  })
 }
 
 function setSuccessMsg(input) {
- const formControl = input.parentElement;
- formControl.className = "box success";
+  const formControl = input.parentElement;
+  formControl.classList.add("box", "success");
+  formControl.classList.remove("error");
+ }
+  
+// more email validate....
+
+function isEmail(emailVal) {
+  let atSymbol = emailVal.indexOf("@");
+  if(atSymbol < 1){
+    return false;
+  }
+  let dot = emailVal.lastIndexOf(".");
+  if(dot <= atSymbol + 3) {
+    return false;
+  }
+  if(dot === emailVal.length - 1){
+    return false;
+  }else{
+    return true;
+  }
+ }
+
+// add event....
+function renderNextform(){
+  let nextBtn = document.querySelector(".nextBtn")
+  nextBtn.addEventListener("click", function(event){
+    event.preventDefault();
+    const fnameVal = document.getElementById("fname").value;
+    console.log("===name",fnameVal, fname);
+    if(fnameVal === ""){
+      setErrorMsg("username can not be blank");
+    }else if(fnameVal.length <= 2){
+      setErrorMsg("username can not be blank");
+    }else{
+      setSuccessMsg(fname);
+    }
+
+    const lnameVal = document.getElementById("lname").value;
+    if(lnameVal === ""){
+      setErrorMsg("username can not be blank");
+    }else if(lnameVal.length <= 2){
+      setErrorMsg("username can not be blank");
+    }else{
+      setSuccessMsg(lname);
+      index ++;
+      let formbox = document.querySelector("#formBox");
+      formbox.innerHTML = "";
+      renderData(formFieldsData);
+      createButton(formFieldsData);
+      renderNextform2();
+    }
+
+  });
 }
+renderNextform();
+
+function renderNextform2(){
+  let nextBtn = document.querySelector(".nextBtn")
+  nextBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    const phoneVal = document.getElementById("phone").value;
+    console.log("===phone", phone);
+    console.log("value=========",phoneVal);
+    if(phoneVal === ""){
+      setErrorMsg("phone can not be blank");
+    }else if(phoneVal.length != 10){
+      setErrorMsg("Not a valid phone num");
+    }else{
+      setSuccessMsg(phone);
+    }
+    
+    
+    const emailVal = document.getElementById("email").value;
+    if(emailVal === ""){
+      setErrorMsg("email can not be blank");
+    }else if(!isEmail(emailVal)){
+      setErrorMsg("Not a valid Email");
+    }else{
+      setSuccessMsg(email);
+      index ++;
+      renderData(formFieldsData);
+      createButton(formFieldsData);
+      renderNextform3();
+    }
+    console.log(index);
+  })
+}
+
+function renderNextform3(){
+  let nextBtn = document.querySelector(".nextBtn")
+  nextBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    const passwordVal = document.getElementById("password").value;
+    if(passwordVal === ""){
+      setErrorMsg(password, "password can not be blank");
+    }else if(passwordVal.length <= 5){
+      setErrorMsg(password, "Minimum 6 char");
+    }else{
+      setSuccessMsg(password);
+    }
+
+    const cpasswordVal = document.getElementById("cpassword").value;
+    if(cpasswordVal === ""){
+      setErrorMsg(cpassword, "confirm password can not be blank");
+    }else if(passwordVal != cpasswordVal){
+      setErrorMsg(cpassword, "password are not matching");
+    }else{
+      setSuccessMsg(cpassword);
+      index ++;
+      renderData(formFieldsData);
+      successMsg();
+    }
+  })
+}
+
+function renderBackform(event){
+  event.preventDefault();
+  index --;
+  renderData(formFieldsData);
+  createButton(formFieldsData);
+}
+
+
+
+
